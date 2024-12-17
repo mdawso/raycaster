@@ -1,4 +1,4 @@
-#include "../include/main.h"
+#include "../include/main.hpp"
 
 const int MAP_WIDTH = 20;
 const int MAP_HEIGHT = 20;
@@ -265,7 +265,8 @@ int main(int argc, char* argv[]) {
         SDL_RenderClear(renderer);
 
         draw_ceiling_and_floor(renderer);
-        for(int x = 0; x < SCREEN_WIDTH; x = x + RAY_EVERY_N_PIXELS) {
+        for(int x = 0; x < SCREEN_WIDTH + RAY_EVERY_N_PIXELS; x = x + RAY_EVERY_N_PIXELS) {
+            // we draw an extra ray here (SCREEN_WIDTH + RAY_EVERY_N_PIXELS) to prevent a gap on the right side of the screen
             player.cast_ray(renderer, x);
         }
 

@@ -5,7 +5,7 @@ LDFLAGS = $(shell sdl2-config --libs)
 
 # source files
 SRCS = src/*.cpp
-BUILD = build/
+BUILD = build
 TARGET = $(BUILD)/raycaster
 
 # build rules
