@@ -40,18 +40,37 @@ public:
         : pos_x(x), pos_y(y), dir_x(dirX), dir_y(dirY), plane_x(planeX), plane_y(planeY) {}
 
     void handle_input(const Uint8* keys, double move_speed, double rot_speed) {
-        if (keys[SDL_SCANCODE_UP]) {
+        // BACK AND FORWARD
+        if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W]) {
             if (worldMap[int(pos_x + dir_x * move_speed)][int(pos_y)] == 0) 
                 pos_x += dir_x * move_speed;
             if (worldMap[int(pos_x)][int(pos_y + dir_y * move_speed)] == 0) 
                 pos_y += dir_y * move_speed;
         }
-        if (keys[SDL_SCANCODE_DOWN]) {
+        if (keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_S]) {
             if (worldMap[int(pos_x - dir_x * move_speed)][int(pos_y)] == 0) 
                 pos_x -= dir_x * move_speed;
             if (worldMap[int(pos_x)][int(pos_y - dir_y * move_speed)] == 0)
                 pos_y -= dir_y * move_speed;
         }
+        // STRAFING LEFT AND RIGHT
+        if (keys[SDL_SCANCODE_A]) {
+            double strafe_x = dir_y;
+            double strafe_y = -dir_x;
+            if (worldMap[int(pos_x + strafe_x * move_speed)][int(pos_y)] == 0) 
+            pos_x += strafe_x * move_speed;
+            if (worldMap[int(pos_x)][int(pos_y + strafe_y * move_speed)] == 0) 
+            pos_y += strafe_y * move_speed;
+        }
+        if (keys[SDL_SCANCODE_D]){
+            double strafe_x = -dir_y;
+            double strafe_y = dir_x;
+            if (worldMap[int(pos_x + strafe_x * move_speed)][int(pos_y)] == 0) 
+            pos_x += strafe_x * move_speed;
+            if (worldMap[int(pos_x)][int(pos_y + strafe_y * move_speed)] == 0) 
+            pos_y += strafe_y * move_speed;
+        }
+        // LOOKING LEFT AND RIGHT
         if (keys[SDL_SCANCODE_RIGHT]) {
             double old_dir_x = dir_x;
             dir_x = dir_x * cos(rot_speed) - dir_y * sin(rot_speed);
