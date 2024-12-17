@@ -1,11 +1,11 @@
-#include "main.h"
+#include "../include/main.h"
 
 const int MAP_WIDTH = 20;
 const int MAP_HEIGHT = 20;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-const int RAY_EVERY_N_PIXELS = 1;
+const int RAY_EVERY_N_PIXELS = 6;
 
 const int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -177,7 +177,6 @@ public:
     
 };
 
-
 void draw_ceiling_and_floor(SDL_Renderer* renderer) {
     // draw ceiling with gradient
     for (int y = 0; y < SCREEN_HEIGHT / 2; ++y) {
@@ -192,8 +191,8 @@ void draw_ceiling_and_floor(SDL_Renderer* renderer) {
     // draw floor with gradient
     for (int y = SCREEN_HEIGHT / 2; y < SCREEN_HEIGHT; ++y) {
         float t = float(y - SCREEN_HEIGHT / 2) / (SCREEN_HEIGHT / 2);
-        uint8_t r = uint8_t(0 * - t);
-        uint8_t g = uint8_t(0 * - t);
+        uint8_t r = 0;
+        uint8_t g = 0;
         uint8_t b = uint8_t(255 * t);
         SDL_SetRenderDrawColor(renderer, r, g, b, 255);
         SDL_RenderDrawLine(renderer, 0, y, SCREEN_WIDTH, y);
