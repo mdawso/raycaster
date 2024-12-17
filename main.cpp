@@ -226,7 +226,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    Player player = {1.5, 1.5, 1.0, 0.0, 0.0, 0.66};
+    Player player = {1.5, 1.5, 1.0, 0.0, 0, 1};
     Uint64 last_time = SDL_GetTicks();
 
     const int FPS = 60;
