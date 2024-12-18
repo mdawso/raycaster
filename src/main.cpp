@@ -5,7 +5,7 @@ const int MAP_HEIGHT = 20;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-const int RAY_EVERY_N_PIXELS = 6;
+const int RAY_EVERY_N_PIXELS = 12;
 
 const int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -145,8 +145,8 @@ public:
             int draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
             if(draw_end >= SCREEN_HEIGHT) draw_end = SCREEN_HEIGHT - 1;
 
-            float r = side == 1 ? 1.0f : 0.0f;
-            float g = side == 1 ? 0.0f : 1.0f;
+            float r = side == 1 ? 1.0f : 0.6f;
+            float g = side == 1 ? 0.0f : 0.0f;
             float b = 0;
 
             float brightness = 1.0f;
@@ -181,20 +181,16 @@ void draw_ceiling_and_floor(SDL_Renderer* renderer) {
     // draw ceiling with gradient
     for (int y = 0; y < SCREEN_HEIGHT / 2; ++y) {
         float t = float(y) / (SCREEN_HEIGHT / 2);
-        uint8_t r = uint8_t(100 * (1 - t));
-        uint8_t g = uint8_t(100 * (1 - t));
-        uint8_t b = uint8_t(255 * (1 - t));
-        SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+        uint8_t colour = uint8_t(50 * (1 - t));
+        SDL_SetRenderDrawColor(renderer, colour, colour, colour, 255);
         SDL_RenderDrawLine(renderer, 0, y, SCREEN_WIDTH, y);
     }
 
     // draw floor with gradient
     for (int y = SCREEN_HEIGHT / 2; y < SCREEN_HEIGHT; ++y) {
         float t = float(y - SCREEN_HEIGHT / 2) / (SCREEN_HEIGHT / 2);
-        uint8_t r = 0;
-        uint8_t g = 0;
-        uint8_t b = uint8_t(255 * t);
-        SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+        uint8_t colour = uint8_t(150 * t);
+        SDL_SetRenderDrawColor(renderer, colour, colour, colour, 255);
         SDL_RenderDrawLine(renderer, 0, y, SCREEN_WIDTH, y);
     }
 }
