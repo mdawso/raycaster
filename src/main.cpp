@@ -36,8 +36,8 @@ class Player {
     int base_move_speed = 5, base_rot_speed = 3;
 
     void move(double dx, double dy, double dt) {
-        pos_x += dx * base_move_speed * dt;
-        pos_y += dy * base_move_speed * dt;
+        if (worldMap[int(pos_x + dx * base_move_speed * dt)][int(pos_y)] == 0) pos_x += dx * base_move_speed * dt;
+        if (worldMap[int(pos_x)][int(pos_y + dy * base_move_speed * dt)] == 0) pos_y += dy * base_move_speed * dt;
     }
 
     void turn(int direction, double dt) {
