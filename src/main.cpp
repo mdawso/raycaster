@@ -76,7 +76,7 @@ class Player {
 class Game {
     int SCREEN_WIDTH = 1280;
     int SCREEN_HEIGHT = 720;
-    int RAY_EVERY_N_PIXELS = 20;
+    int RAY_EVERY_N_PIXELS = 4;
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool running;
