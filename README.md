@@ -7,7 +7,6 @@ To make:
 ```bash
 cd /path/to/repo/
 chmod u+x tools/premake5
-./premake5 gmake2
-cd ..
+./tools/premake5 gmake2
 make
 ```
