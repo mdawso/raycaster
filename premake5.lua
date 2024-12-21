@@ -1,10 +1,10 @@
 workspace "raycaster"
-configurations { "Debug", "Release" }
+configurations { "Debug", "Release"}
 
 project "raycaster"
     kind "ConsoleApp"
     language "C++"
-    targetdir "build/%{cfg.buildcfg}"
+    targetdir "bin/%{cfg.buildcfg}"
     cppdialect "C++20"
 
     files { "src/*.cpp" }
