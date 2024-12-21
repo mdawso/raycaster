@@ -3,8 +3,11 @@ dependencies:
 ```bash
 sudo apt install build-essential libsdl2-dev
 ```
-To make and run:
+To make:
 ```bash
 cd /path/to/repo/
-make run
+chmod u+x tools/premake5
+./premake5 gmake2
+cd ..
+make
 ```
