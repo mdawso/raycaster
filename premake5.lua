@@ -5,11 +5,10 @@ project "raycaster"
     kind "ConsoleApp"
     language "C++"
     targetdir "bin/%{cfg.buildcfg}"
-    cppdialect "C++20"
+    cppdialect "C++23"
 
-    files { "src/*.cpp" }
-    links { "SDL2" }
-    libdirs { os.findlib("SDL2") }
+    files { "src/**.cpp", "src/**.hpp" }
+    links { "SDL3" }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
