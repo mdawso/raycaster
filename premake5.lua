@@ -6,6 +6,7 @@ project "raycaster"
     language "C++"
     targetdir "bin/%{cfg.buildcfg}"
     cppdialect "C++23"
+    buildoptions { "-Wall", "-Wextra" }
 
     files { "src/**.cpp", "src/**.hpp" }
     links { "SDL3" }

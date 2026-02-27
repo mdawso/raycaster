@@ -29,17 +29,17 @@ constexpr int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int main(int argc, char* argv[]) {
-    const int SCREEN_WIDTH = 1280;
-    const int SCREEN_HEIGHT = 720;
-    const int RAY_EVERY_N_PIXELS = 2;
+int main(void) {
+    constexpr int SCREEN_WIDTH = 1280;
+    constexpr int SCREEN_HEIGHT = 720;
+    const int RAY_EVERY_N_PIXELS = SCREEN_WIDTH / 320;
 
     if (!SDL_Init(SDL_INIT_VIDEO)) return -1;
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
 
-    SDL_CreateWindowAndRenderer("raycaster", SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer);
+    SDL_CreateWindowAndRenderer("raycaster", SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
 
     double pos_x = 1.5, pos_y = 1.5;
     double dir_x = 1.0, dir_y = 0.0;
@@ -68,12 +68,12 @@ int main(int argc, char* argv[]) {
             if (worldMap[static_cast<int>(pos_x)][static_cast<int>(next_y)] == 0) pos_y = next_y;
         };
 
-            if (keys[SDL_SCANCODE_W]) move(dir_x, dir_y);
-            if (keys[SDL_SCANCODE_S]) move(-dir_x, -dir_y);
-            if (keys[SDL_SCANCODE_A]) move(-plane_x, -plane_y);
-            if (keys[SDL_SCANCODE_D]) move(plane_x, plane_y);
+        if (keys[SDL_SCANCODE_W]) move(dir_x, dir_y);
+        if (keys[SDL_SCANCODE_S]) move(-dir_x, -dir_y);
+        if (keys[SDL_SCANCODE_A]) move(-plane_x, -plane_y);
+        if (keys[SDL_SCANCODE_D]) move(plane_x, plane_y);
 
-            double rot = 0.0;
+        double rot = 0.0;
         if (keys[SDL_SCANCODE_LEFT]) rot = -base_rot_speed * dt;
         if (keys[SDL_SCANCODE_RIGHT]) rot = base_rot_speed * dt;
 
@@ -89,13 +89,15 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
+        // Ceiling
         for (int y = 0; y < SCREEN_HEIGHT / 2; ++y) {
             float t = static_cast<float>(y) / (static_cast<float>(SCREEN_HEIGHT) / 2.0f);
             uint8_t color = static_cast<uint8_t>(50.0f * (1.0f - t));
             SDL_SetRenderDrawColor(renderer, color, color, color, 255);
             SDL_RenderLine(renderer, 0, y, SCREEN_WIDTH, y);
         }
-
+        
+        // Floor
         for (int y = SCREEN_HEIGHT / 2; y < SCREEN_HEIGHT; ++y) {
             float t = (static_cast<float>(y) - static_cast<float>(SCREEN_HEIGHT) / 2.0f) / (static_cast<float>(SCREEN_HEIGHT) / 2.0f);
             uint8_t color = static_cast<uint8_t>(150.0f * t);
@@ -134,8 +136,8 @@ int main(int argc, char* argv[]) {
             if (hit) {
                 double perp_wall_dist = (side == 0) ? (side_dist_x - delta_dist_x) : (side_dist_y - delta_dist_y);
                 int line_h = static_cast<int>(SCREEN_HEIGHT / perp_wall_dist);
-                int d_start = std::max(0, -line_h / 2 + SCREEN_HEIGHT / 2);
-                int d_end = std::min(SCREEN_HEIGHT - 1, line_h / 2 + SCREEN_HEIGHT / 2);
+                int d_start = std::max(0, -line_h + SCREEN_HEIGHT / 2);
+                int d_end = std::min(SCREEN_HEIGHT - 1, line_h + SCREEN_HEIGHT / 2);
 
                 float brightness = std::clamp(1.0f - static_cast<float>(perp_wall_dist / 20.0), 0.1f, 1.0f);
                 float color_scale = (side == 1) ? 0.7f : 1.0f;
